@@ -6,7 +6,11 @@ import detailsContext from './DetailsContext';
 function App() {
   const [pokeList, setPokeList] = useState([])
   const [details, setDetails] = useState({});
-  const value = {details, setDetails};
+  const contextValue = {details, setDetails};
+
+  const woot = () => {
+    return <h1>THIS IS A COMPONENT</h1>
+  }
 
   let renderComponent;
   useEffect(() => {
@@ -18,11 +22,11 @@ function App() {
     }, []
   )
 
-    if(Object.keys(details).length === 0){
+  if(Object.keys(details).length === 0){
     if(pokeList.length === 0){
       renderComponent = <h1>LOADING....</h1>
     }else{
-     renderComponent = pokeList.map(pokemon => <Pokemon key={pokemon.name} value={pokemon}/>)
+      renderComponent = pokeList.map(pokemon => <Pokemon key={pokemon.name} notContextValue={pokemon}/>)
     }
   }else{
     renderComponent = <PokeDetails details={details}/>
@@ -30,9 +34,12 @@ function App() {
 
   return (
     <>
-      <detailsContext.Provider value={value}>
+      <detailsContext.Provider value={contextValue}>
        {renderComponent}
+       {/* more components */}
       </detailsContext.Provider>
+      {/* other components */}
+      <woot/>
     </>
   );
 
